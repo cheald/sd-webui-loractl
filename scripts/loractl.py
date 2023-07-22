@@ -19,8 +19,12 @@ class LoraCtlScript(scripts.Script):
         return [opt_plot_lora_weight]
 
     def process(self, p: StableDiffusionProcessing, opt_plot_lora_weight: bool):
+        utils.set_hires(False)
         lora_ctl_network.reset_weights()
         plot.reset_plot()
+
+    def before_hr(self, p, *args):
+        utils.set_hires(True)
 
     def postprocess(self, p, processed, opt_plot_lora_weight: bool):
         if opt_plot_lora_weight:

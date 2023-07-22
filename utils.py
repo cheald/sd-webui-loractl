@@ -31,3 +31,11 @@ def calculate_weight(m, step, max_steps, step_offset=2):
         return v
     else:
         return m
+
+hires = False
+def is_hires():
+    return hires
+
+def set_hires(value):
+    global hires
+    hires = value

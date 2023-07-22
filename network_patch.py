@@ -1,7 +1,7 @@
 from modules import shared
 from lora_ctl_network import network, lora_weights
 import numpy as np
-from utils import calculate_weight
+from utils import calculate_weight, is_hires
 
 # Patch network.Network so it reapplies properly for dynamic weights
 # By default, network application is cached, with (name, te, unet, dim) as a key
@@ -14,16 +14,15 @@ def get_weight(m, cls=None):
 
 def get_dynamic_te(self):
     if self.name in lora_weights:
-        key = "te" if shared.state.job_no == 0 else "hrte"
+        key = "te" if is_hires() == 0 else "hrte"
         w = lora_weights[self.name]
-
         return get_weight( w.get(key, self._te_multiplier), cls="te" )
 
     return get_weight(self._te_multiplier)
 
 def get_dynamic_unet(self):
     if self.name in lora_weights:
-        key = "unet" if shared.state.job_no == 0 else "hrunet"
+        key = "unet" if is_hires() == 0 else "hrunet"
         w = lora_weights[self.name]
         return get_weight( w.get(key, self._unet_multiplier), cls="unet" )
 
