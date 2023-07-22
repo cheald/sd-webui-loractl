@@ -35,7 +35,9 @@ This extension extends this syntax so that rather than just single weights, you 
 The weight may be:
 
 * A single number, which will be used for all steps (e.g, `1.0`)
-* A comma-separated list of weight-at-step pairs, e.g. `0@0,1@0.5,0@1` to start at 0, go to 1 at step 0.5, and return to 0 at step 1
+* A comma-separated list of weight-at-step pairs, e.g. `0@0,1@0.5,0@1` to start at 0, go to 1.0 strength halfway through generation, then scale back down to 0 when we finish generation. This is smoothly interpolated, so the weight curve looks something like:
+
+![](assets/tmpumkrx_oc.png)
 
 The step value (after the @) may be a float in the 0.0-1.0 domain, in which case it is interpreted as a percentage of the pass steps. If it is greater than 1, then it is interpreted as an absolute step number.
 
@@ -48,6 +50,8 @@ The default weight for the network at step 0 is the earliest weight given. That 
 You can use the named arguments `hr`, `hrte`, and `hrunet` to specify weights for the whole lora, or just the te/unet during the high res pass. For example, you could apply a lora at half weight during the first pass, and full weight during the HR pass, with:
 
     <lora:network:0.5:hr=1.0>
+
+![](assets/tmp6vhmj4ty.png)
 
 Or, you could grow the lora strength during the first pass, and then decline during the HR pass:
 
@@ -65,7 +69,7 @@ So I first try just throwing them together:
 
 ![](assets/00007-1449410826.png)
 
-The AT lora is clearly too powerful, so I'll try mixing them together:
+The AT lora is clearly too powerful, so I'll try mixing them together more conservatively:
 
 ```
 <lora:st4rw4ar5at4t:0.5> <lora:MechanicalBird:0.5> mechanical bird,  st4rw4ar5at4t
@@ -129,3 +133,21 @@ So, we're going to just stuff the pixelart lora for the first 5 steps, THEN turn
 ![](assets/00015-1449410826.png)
 
 Awesome.
+
+### Separate text encoder/unet control
+
+The new 1.5.0RC allows for separate control of the text encoder and unet weights in the lora syntax. loractl allows for variable control of them independently, as well:
+
+```
+<lora:pixel:te=1:unet=0@0,1@1> pixelart, mecha on the beach, beautiful sunset, epic lighting
+```
+
+![](assets/00016-1449410826.png)
+
+```
+<lora:pixel:te=0@0,1@1:unet=1> pixelart, mecha on the beach, beautiful sunset, epic lighting
+```
+
+![](assets/00017-1449410826.png)
+
+You can play with each of the weights individually to achieve the effects and model mixing best desired.

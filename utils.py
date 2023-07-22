@@ -22,7 +22,7 @@ def calculate_weight(m, step, max_steps, step_offset=2):
     if isinstance(m, list):
         if m[1][-1] <= 1.0:
             if max_steps > 0:
-                step = (step+step_offset) / (max_steps)
+                step = (step) / (max_steps - step_offset)
             else:
                 step = 1.0
         else:

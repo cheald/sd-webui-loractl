@@ -10,7 +10,7 @@ from utils import calculate_weight
 # of caching when weights are not updated.
 
 def get_weight(m, cls=None):
-    return calculate_weight(m, shared.state.sampling_step, shared.state.sampling_steps)
+    return calculate_weight(m, shared.state.sampling_step, shared.state.sampling_steps, step_offset=2)
 
 def get_dynamic_te(self):
     if self.name in lora_weights:

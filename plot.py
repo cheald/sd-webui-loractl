@@ -7,7 +7,7 @@ from lora_ctl_network import networks
 
 log_weights = []
 log_names = []
-
+last_plotted_step = -1
 
 # Copied from composable_lora
 def plot_lora_weight(lora_weights, lora_names):
@@ -33,6 +33,7 @@ def fig2img(fig):
 
 
 def reset_plot():
+    global last_plotted_step
     log_weights.clear()
     log_names.clear()
 
@@ -42,7 +43,12 @@ def make_plot():
 
 
 # On each step, capture our lora weights for plotting
+
 def on_step(params):
+    global last_plotted_step
+    if last_plotted_step == params.sampling_step:
+        log_weights.pop()
+    last_plotted_step = params.sampling_step
     if len(log_names) == 0:
         for net in networks.loaded_networks:
             log_names.append(net.name + "_te")

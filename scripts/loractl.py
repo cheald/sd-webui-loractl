@@ -22,8 +22,9 @@ class LoraCtlScript(scripts.Script):
         lora_ctl_network.reset_weights()
         plot.reset_plot()
 
-    def postprocess(self, p, processed, *args):
-        processed.images.extend([plot.make_plot()])
+    def postprocess(self, p, processed, opt_plot_lora_weight: bool):
+        if opt_plot_lora_weight:
+            processed.images.extend([plot.make_plot()])
 
 
 network_patch.apply()
