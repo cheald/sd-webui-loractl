@@ -1,3 +1,5 @@
+# LoRa Control - Dynamic Weights Controller
+
 This is an extension for the [Automatic1111 Stable Diffusion web interface](https://github.com/AUTOMATIC1111/stable-diffusion-webui) which replaces the standard built-in LoraNetwork with one that understands additional syntax for mutating lora weights over the course of the generation. Both positional arguments and named arguments are honored, and additional control for normal versus high-res passes are provided.
 
 The idea was inspired by the step control in [composable lora](https://github.com/a2569875/stable-diffusion-webui-composable-lora), which unfortunately doesn't work with newer versions of the webui.
