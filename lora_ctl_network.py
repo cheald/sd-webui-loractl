@@ -1,4 +1,4 @@
-from modules import extra_networks, shared, script_callbacks
+from modules import extra_networks, script_callbacks, shared
 import utils
 
 import sys, os
@@ -64,36 +64,13 @@ class LoraCtlNetwork(extra_networks_lora.ExtraNetworkLora):
             name = params.positional[0]
             names.append(name)
 
-            te = 1.0
-            unet = 1.0
-
-            if not name in lora_weights:
-                lora_weights[name] = {"unet": None, "te": 1.0}
-            if len(params.positional) > 1:
-                lora_weights[name]["te"] = utils.sorted_positions(params.positional[1])
-            if len(params.positional) > 2:
-                lora_weights[name]["unet"] = utils.sorted_positions(params.positional[2])
-
-            if params.named.get("te"):
-                lora_weights[name]["te"] = utils.sorted_positions(params.named.get("te"))
-            if params.named.get("unet"):
-                lora_weights[name]["unet"] = utils.sorted_positions(params.named.get("unet"))
-            if params.named.get("hr"):
-                lora_weights[name]["hrunet"] = utils.sorted_positions(params.named.get("hr"))
-                lora_weights[name]["hrte"] = utils.sorted_positions(params.named.get("hr"))
-            if params.named.get("hrunet"):
-                lora_weights[name]["hrunet"] = utils.sorted_positions(params.named.get("hrunet"))
-            if params.named.get("hrte"):
-                lora_weights[name]["hrte"] = utils.sorted_positions(params.named.get("hrte"))
-
-            if lora_weights[name]["unet"] == None:
-                lora_weights[name]["unet"] = lora_weights[name]["te"]
+            lora_weights[name] = utils.params_to_weights(params)
 
             dyn_dim = int(params.positional[3]) if len(params.positional) > 3 else None
             dyn_dim = int(params.named["dyn"]) if "dyn" in params.named else dyn_dim
 
-            te_multipliers.append(te)
-            unet_multipliers.append(unet)
+            te_multipliers.append(1.0)
+            unet_multipliers.append(1.0)
             dyn_dims.append(dyn_dim)
 
         networks.load_networks(names,
@@ -119,6 +96,7 @@ class LoraCtlNetwork(extra_networks_lora.ExtraNetworkLora):
 
             if network_hashes:
                 p.extra_generation_params["Lora hashes"] = ", ".join(network_hashes)
+
 
 def before_ui():
     extra_networks.register_extra_network(LoraCtlNetwork())

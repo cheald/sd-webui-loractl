@@ -153,3 +153,9 @@ The new 1.5.0RC allows for separate control of the text encoder and unet weights
 ![](assets/00017-1449410826.png)
 
 You can play with each of the weights individually to achieve the effects and model mixing best desired.
+
+### Running tests
+
+A basic test suite is included to assert that parsing and setup of weight params is correct. To run it, from your SD install directory (not the extension directory), run:
+
+    python -m unittest discover extensions/sd-webui-loractl

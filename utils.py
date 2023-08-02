@@ -32,6 +32,42 @@ def calculate_weight(m, step, max_steps, step_offset=2):
     else:
         return m
 
+
+def params_to_weights(params):
+    weights = {"unet": None, "te": 1.0, "hrunet": None, "hrte": None}
+
+    if len(params.positional) > 1:
+        weights["te"] = sorted_positions(params.positional[1])
+
+    if len(params.positional) > 2:
+        weights["unet"] = sorted_positions(params.positional[2])
+
+    if params.named.get("te"):
+        weights["te"] = sorted_positions(params.named.get("te"))
+
+    if params.named.get("unet"):
+        weights["unet"] = sorted_positions(params.named.get("unet"))
+
+    if params.named.get("hr"):
+        weights["hrunet"] = sorted_positions(params.named.get("hr"))
+        weights["hrte"] = sorted_positions(params.named.get("hr"))
+
+    if params.named.get("hrunet"):
+        weights["hrunet"] = sorted_positions(params.named.get("hrunet"))
+
+    if params.named.get("hrte"):
+        weights["hrte"] = sorted_positions(params.named.get("hrte"))
+
+    # If unet ended up unset, then use the te value
+    weights["unet"] = weights["unet"] or weights["te"]
+    # If hrunet ended up unset, use unet value
+    weights["hrunet"] = weights["hrunet"] or weights["unet"]
+    # If hrte ended up unset, use te value
+    weights["hrte"] = weights["hrte"] or weights["te"]
+
+    return weights
+
+
 hires = False
 def is_hires():
     return hires
