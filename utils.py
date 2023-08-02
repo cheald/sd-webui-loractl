@@ -59,11 +59,11 @@ def params_to_weights(params):
         weights["hrte"] = sorted_positions(params.named.get("hrte"))
 
     # If unet ended up unset, then use the te value
-    weights["unet"] = weights["unet"] or weights["te"]
+    weights["unet"] = weights["unet"] if weights["unet"] is not None else weights["te"]
     # If hrunet ended up unset, use unet value
-    weights["hrunet"] = weights["hrunet"] or weights["unet"]
+    weights["hrunet"] = weights["hrunet"] if weights["hrunet"] is not None else weights["unet"]
     # If hrte ended up unset, use te value
-    weights["hrte"] = weights["hrte"] or weights["te"]
+    weights["hrte"] = weights["hrte"] if weights["hrte"] is not None else weights["te"]
 
     return weights
 

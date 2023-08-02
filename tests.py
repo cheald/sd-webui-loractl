@@ -93,3 +93,10 @@ class LoraCtlNetworkTests(unittest.TestCase):
                               'hrte': 0.5,
                               'hrunet': 0.6,
                             })
+
+        self.assert_params("loraname:0.8@0.15,0@0.3:hr=0", {
+                              'hrte': 0.0,
+                              'hrunet': 0.0,
+                              'te': [[0.8, 0.0], [0.15, 0.3]],
+                              'unet': [[0.8, 0.0], [0.15, 0.3]]
+                            })
