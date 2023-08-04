@@ -9,6 +9,7 @@ log_weights = []
 log_names = []
 last_plotted_step = -1
 
+
 # Copied from composable_lora
 def plot_lora_weight(lora_weights, lora_names):
     data = pd.DataFrame(lora_weights, columns=lora_names)
@@ -43,7 +44,6 @@ def make_plot():
 
 
 # On each step, capture our lora weights for plotting
-
 def on_step(params):
     global last_plotted_step
     if last_plotted_step == params.sampling_step:

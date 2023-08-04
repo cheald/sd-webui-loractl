@@ -1,9 +1,11 @@
-import sys, unittest
+import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
-from modules.extra_networks import ExtraNetworkParams
 from lib.utils import sorted_positions, calculate_weight, params_to_weights
+from modules.extra_networks import ExtraNetworkParams
+import unittest
+
 
 class LoraCtlTests(unittest.TestCase):
     def test_sorted_positions(self):
@@ -49,55 +51,55 @@ class LoraCtlNetworkTests(unittest.TestCase):
     def test_params_to_weights(self):
         # TE cascades to all
         self.assert_params("loraname:1.0", {
-                              'hrte': 1.0,
-                              'hrunet': 1.0,
-                              'te': 1.0,
-                              'unet': 1.0
+            'hrte': 1.0,
+            'hrunet': 1.0,
+            'te': 1.0,
+            'unet': 1.0
         })
 
         # HR can be specified separately
         self.assert_params("loraname:0.5@0,1@1:hr=0.6", {
-                              'hrte': 0.6,
-                              'hrunet': 0.6,
-                              'te': [[0.5, 1.0], [0.0, 1.0]],
-                              'unet': [[0.5, 1.0], [0.0, 1.0]]
-                            })
+            'hrte': 0.6,
+            'hrunet': 0.6,
+            'te': [[0.5, 1.0], [0.0, 1.0]],
+            'unet': [[0.5, 1.0], [0.0, 1.0]]
+        })
 
         # Explicit TE cascades
         self.assert_params("loraname:te=0.5@0,1@1", {
-                              'te': [[0.5, 1.0], [0.0, 1.0]],
-                              'unet': [[0.5, 1.0], [0.0, 1.0]],
-                              'hrte': [[0.5, 1.0], [0.0, 1.0]],
-                              'hrunet': [[0.5, 1.0], [0.0, 1.0]],
-                            })
+            'te': [[0.5, 1.0], [0.0, 1.0]],
+            'unet': [[0.5, 1.0], [0.0, 1.0]],
+            'hrte': [[0.5, 1.0], [0.0, 1.0]],
+            'hrunet': [[0.5, 1.0], [0.0, 1.0]],
+        })
 
         # Implicit TE cascades, explicit unet cascades
         self.assert_params("loraname:unet=0.5@0,1@1", {
-                              'te': 1.0,
-                              'unet': [[0.5, 1.0], [0.0, 1.0]],
-                              'hrte': 1.0,
-                              'hrunet': [[0.5, 1.0], [0.0, 1.0]],
-                            })
+            'te': 1.0,
+            'unet': [[0.5, 1.0], [0.0, 1.0]],
+            'hrte': 1.0,
+            'hrunet': [[0.5, 1.0], [0.0, 1.0]],
+        })
 
         # Explicit HR TE overrides lowres TE
         self.assert_params("loraname:unet=0.5@0,1@1:hrte=0.5", {
-                              'te': 1.0,
-                              'unet': [[0.5, 1.0], [0.0, 1.0]],
-                              'hrte': 0.5,
-                              'hrunet': [[0.5, 1.0], [0.0, 1.0]],
-                            })
+            'te': 1.0,
+            'unet': [[0.5, 1.0], [0.0, 1.0]],
+            'hrte': 0.5,
+            'hrunet': [[0.5, 1.0], [0.0, 1.0]],
+        })
 
         # Explicit HR TE overrides HR
         self.assert_params("loraname:hr=0.6:hrte=0.5", {
-                              'te': 1.0,
-                              'unet': 1.0,
-                              'hrte': 0.5,
-                              'hrunet': 0.6,
-                            })
+            'te': 1.0,
+            'unet': 1.0,
+            'hrte': 0.5,
+            'hrunet': 0.6,
+        })
 
         self.assert_params("loraname:0.8@0.15,0@0.3:hr=0", {
-                              'hrte': 0.0,
-                              'hrunet': 0.0,
-                              'te': [[0.8, 0.0], [0.15, 0.3]],
-                              'unet': [[0.8, 0.0], [0.15, 0.3]]
-                            })
+            'hrte': 0.0,
+            'hrunet': 0.0,
+            'te': [[0.8, 0.0], [0.15, 0.3]],
+            'unet': [[0.8, 0.0], [0.15, 0.3]]
+        })

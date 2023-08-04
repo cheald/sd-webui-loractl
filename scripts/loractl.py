@@ -15,10 +15,12 @@ class LoraCtlScript(scripts.Script):
     def ui(self, is_img2img):
         with gr.Group():
             with gr.Accordion("Dynamic Lora Weights", open=False):
-                opt_plot_lora_weight = gr.Checkbox(value=False, label="Plot the LoRA weight in all steps")
+                opt_plot_lora_weight = gr.Checkbox(
+                    value=False, label="Plot the LoRA weight in all steps")
         return [opt_plot_lora_weight]
 
     def process(self, p: StableDiffusionProcessing, opt_plot_lora_weight=False):
+        network_patch.apply()
         utils.set_hires(False)
         lora_ctl_network.reset_weights()
         plot.reset_plot()
@@ -29,6 +31,3 @@ class LoraCtlScript(scripts.Script):
     def postprocess(self, p, processed, opt_plot_lora_weight=False):
         if opt_plot_lora_weight:
             processed.images.extend([plot.make_plot()])
-
-
-network_patch.apply()

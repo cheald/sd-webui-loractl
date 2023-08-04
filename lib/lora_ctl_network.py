@@ -12,8 +12,10 @@ sys.path.pop(0)
 
 lora_weights = {}
 
+
 def reset_weights():
     lora_weights.clear()
+
 
 class LoraCtlNetwork(extra_networks_lora.ExtraNetworkLora):
     # Hijack the params parser and feed it dummy weights instead so it doesn't choke trying to
@@ -27,7 +29,6 @@ class LoraCtlNetwork(extra_networks_lora.ExtraNetworkLora):
             # our lora_weights dict
             params.positional = [name, 0]
             params.named = {}
-
         return super().activate(p, params_list)
 
 

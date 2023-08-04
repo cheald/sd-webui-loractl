@@ -2,8 +2,11 @@ import numpy as np
 import re
 
 # Given a string like x@y,z@a, returns [[x, z], [y, a]] sorted for consumption by np.interp
+
+
 def sorted_positions(raw_steps):
-    steps = [[float(s.strip()) for s in x.split("@")] for x in re.split("[,;]", raw_steps)]
+    steps = [[float(s.strip()) for s in x.split("@")]
+             for x in re.split("[,;]", raw_steps)]
     # If we just got a single number, just return it
     if len(steps[0]) == 1:
         return steps[0][0]
@@ -69,8 +72,11 @@ def params_to_weights(params):
 
 
 hires = False
+
+
 def is_hires():
     return hires
+
 
 def set_hires(value):
     global hires
