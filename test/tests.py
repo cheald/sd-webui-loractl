@@ -1,8 +1,6 @@
-import unittest
-
-from utils import sorted_positions, calculate_weight, params_to_weights
+import sys, unittest
 from modules.extra_networks import ExtraNetworkParams
-
+from lib.utils import sorted_positions, calculate_weight, params_to_weights
 
 class LoraCtlTests(unittest.TestCase):
     def test_sorted_positions(self):

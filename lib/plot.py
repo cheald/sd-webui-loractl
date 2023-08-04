@@ -3,7 +3,7 @@ from PIL import Image
 from modules import script_callbacks
 import matplotlib
 import pandas as pd
-from lora_ctl_network import networks
+from lib.lora_ctl_network import networks
 
 log_weights = []
 log_names = []

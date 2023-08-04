@@ -2,7 +2,7 @@ import modules.scripts as scripts
 from modules import extra_networks
 from modules.processing import StableDiffusionProcessing
 import gradio as gr
-import utils, plot, lora_ctl_network, network_patch
+from lib import utils, plot, lora_ctl_network, network_patch
 
 
 class LoraCtlScript(scripts.Script):
@@ -18,7 +18,7 @@ class LoraCtlScript(scripts.Script):
                 opt_plot_lora_weight = gr.Checkbox(value=False, label="Plot the LoRA weight in all steps")
         return [opt_plot_lora_weight]
 
-    def process(self, p: StableDiffusionProcessing, opt_plot_lora_weight: bool):
+    def process(self, p: StableDiffusionProcessing, opt_plot_lora_weight=False):
         utils.set_hires(False)
         lora_ctl_network.reset_weights()
         plot.reset_plot()
@@ -26,7 +26,7 @@ class LoraCtlScript(scripts.Script):
     def before_hr(self, p, *args):
         utils.set_hires(True)
 
-    def postprocess(self, p, processed, opt_plot_lora_weight: bool):
+    def postprocess(self, p, processed, opt_plot_lora_weight=False):
         if opt_plot_lora_weight:
             processed.images.extend([plot.make_plot()])
 
