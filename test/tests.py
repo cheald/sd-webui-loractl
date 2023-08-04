@@ -1,4 +1,7 @@
 import sys, unittest
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
 from modules.extra_networks import ExtraNetworkParams
 from lib.utils import sorted_positions, calculate_weight, params_to_weights
 

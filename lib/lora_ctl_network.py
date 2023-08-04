@@ -1,11 +1,14 @@
 from modules import extra_networks, script_callbacks, shared
 from lib import utils
 
-import sys, os
+import sys
+from pathlib import Path
+
 # extensions-builtin isn't normally referencable due to the dash; this hacks around that
-sys.path.append(os.path.join("extensions-builtin", "Lora"))
+lora_path = Path(__file__).parent.parent.parent.parent / "extensions-builtin" / "Lora"
+sys.path.insert(0, str(lora_path))
 import network, networks, network_lora, extra_networks_lora
-sys.path.pop()
+sys.path.pop(0)
 
 lora_weights = {}
 

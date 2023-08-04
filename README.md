@@ -156,6 +156,8 @@ You can play with each of the weights individually to achieve the effects and mo
 
 ### Running tests
 
-A basic test suite is included to assert that parsing and setup of weight params is correct. To run it, from your SD install directory (not the extension directory), run:
+A basic test suite is included to assert that parsing and setup of weight params is correct. Invoke it with:
 
-    python -m unittest discover extensions/sd-webui-loractl
+    python -m unittest discover test
+
+Please note that the extension will need to be properly installed in a webui install to be tested, as it does rely on imports from the webui itself.
