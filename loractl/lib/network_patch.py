@@ -1,8 +1,8 @@
 from modules import shared
 import numpy as np
 
-from lib.lora_ctl_network import network, lora_weights
-from lib.utils import calculate_weight, is_hires
+from loractl.lib.lora_ctl_network import network, lora_weights
+from loractl.lib.utils import calculate_weight, is_hires
 
 # Patch network.Network so it reapplies properly for dynamic weights
 # By default, network application is cached, with (name, te, unet, dim) as a key

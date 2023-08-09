@@ -1,14 +1,14 @@
 from modules import extra_networks, script_callbacks, shared
-from lib import utils
+from loractl.lib import utils
 
-import sys
+import sys, importlib
 from pathlib import Path
 
 # extensions-builtin isn't normally referencable due to the dash; this hacks around that
-lora_path = Path(__file__).parent.parent.parent.parent / "extensions-builtin" / "Lora"
-sys.path.insert(0, str(lora_path))
+lora_path = str(Path(__file__).parent.parent.parent.parent.parent / "extensions-builtin" / "Lora")
+sys.path.insert(0, lora_path)
 import network, networks, network_lora, extra_networks_lora
-sys.path.pop(0)
+sys.path.remove(lora_path)
 
 lora_weights = {}
 

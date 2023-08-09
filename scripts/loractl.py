@@ -2,7 +2,7 @@ import modules.scripts as scripts
 from modules import extra_networks
 from modules.processing import StableDiffusionProcessing
 import gradio as gr
-from lib import utils, plot, lora_ctl_network, network_patch
+from loractl.lib import utils, plot, lora_ctl_network, network_patch
 
 
 class LoraCtlScript(scripts.Script):

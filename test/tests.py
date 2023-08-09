@@ -1,10 +1,11 @@
-import sys
+import sys, unittest
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+from loractl.lib.utils import sorted_positions, calculate_weight, params_to_weights
 
-from lib.utils import sorted_positions, calculate_weight, params_to_weights
+path = str(Path(__file__).parent.parent.parent.parent)
+sys.path.insert(0, path)
 from modules.extra_networks import ExtraNetworkParams
-import unittest
+sys.path.remove(path)
 
 
 class LoraCtlTests(unittest.TestCase):
