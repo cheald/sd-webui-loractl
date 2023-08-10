@@ -12,7 +12,7 @@ Quick features:
 
 ### Installation
 
-**⚠️ This extension only works with the Automatic1111 1.5RC or later. It is directly tied to the new network handling architecture.**
+**⚠️ This extension only works with the Automatic1111 1.5RC or later. It is directly tied to the new network handling architecture. It does not currently work with SD.Next, and will not unless SD.Next adopts the 1.5 extra network architecture.**
 
 In the Automatic1111 UI, go to Extensions, then "Install from URL" and enter
 
