@@ -46,7 +46,7 @@ def make_plot():
 # On each step, capture our lora weights for plotting
 def on_step(params):
     global last_plotted_step
-    if last_plotted_step == params.sampling_step:
+    if last_plotted_step == params.sampling_step and len(log_weights) > 0:
         log_weights.pop()
     last_plotted_step = params.sampling_step
     if len(log_names) == 0:
