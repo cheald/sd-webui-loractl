@@ -72,7 +72,7 @@ def params_to_weights(params):
 
 
 hires = False
-
+loractl_active = True
 
 def is_hires():
     return hires
