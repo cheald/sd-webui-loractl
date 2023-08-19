@@ -81,3 +81,12 @@ def is_hires():
 def set_hires(value):
     global hires
     hires = value
+
+
+def set_active(value):
+    global loractl_active
+    loractl_active = value
+
+def is_active():
+    global loractl_active
+    return loractl_active

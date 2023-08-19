@@ -21,6 +21,9 @@ class LoraCtlNetwork(extra_networks_lora.ExtraNetworkLora):
     # Hijack the params parser and feed it dummy weights instead so it doesn't choke trying to
     # parse our extended syntax
     def activate(self, p, params_list):
+        if not utils.is_active():
+            return super().activate(p, params_list)
+
         for params in params_list:
             assert params.items
             name = params.positional[0]
