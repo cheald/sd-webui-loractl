@@ -27,11 +27,11 @@ class LoraCtlNetwork(extra_networks_lora.ExtraNetworkLora):
         for params in params_list:
             assert params.items
             name = params.positional[0]
-            if len(params.positional) > 1 and params.positional[1] != -1337:
+            if not lora_weights:
                 lora_weights[name] = utils.params_to_weights(params)
-            # The 0 weight is fine here, since our actual patch looks up the weights from
+            # The hardcoded 1 weight is fine here, since our actual patch looks up the weights from
             # our lora_weights dict
-            params.positional = [name, -1337]
+            params.positional = [name, 1]
             params.named = {}
         return super().activate(p, params_list)
 
