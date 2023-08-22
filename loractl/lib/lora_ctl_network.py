@@ -27,7 +27,7 @@ class LoraCtlNetwork(extra_networks_lora.ExtraNetworkLora):
         for params in params_list:
             assert params.items
             name = params.positional[0]
-            if not lora_weights:
+            if lora_weights.get(name, None) == None:
                 lora_weights[name] = utils.params_to_weights(params)
             # The hardcoded 1 weight is fine here, since our actual patch looks up the weights from
             # our lora_weights dict
