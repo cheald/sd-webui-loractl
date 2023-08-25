@@ -34,10 +34,3 @@ class LoraCtlNetwork(extra_networks_lora.ExtraNetworkLora):
             params.positional = [name, 1]
             params.named = {}
         return super().activate(p, params_list)
-
-
-def before_ui():
-    extra_networks.register_extra_network(LoraCtlNetwork())
-
-
-script_callbacks.on_before_ui(before_ui)
