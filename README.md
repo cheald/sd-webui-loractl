@@ -47,6 +47,12 @@ If only a single argument (or just `te`) is given, then it applies to both the t
 
 The default weight for the network at step 0 is the earliest weight given. That is, given a step weight of `0.25@0.5,1@1`, the weights will will begin at 0.25 weight, stay there until until half the steps are run, then interpolate up to 1.0 for the final step.
 
+### Network Aliases
+
+You can also use `loractl` as the network name; this is functionally identical, but may let you dodge compatibility issues with other network handling, and will cause loractl networks to just not do anything when the extension is not enabled.
+
+    <loractl:network:0.5:hr=1.0>
+
 ### Separate high-res pass control
 
 You can use the named arguments `hr`, `hrte`, and `hrunet` to specify weights for the whole lora, or just the te/unet during the high res pass. For example, you could apply a lora at half weight during the first pass, and full weight during the HR pass, with:
