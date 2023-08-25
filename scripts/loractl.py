@@ -30,7 +30,7 @@ class LoraCtlScript(scripts.Script):
             self.original_network = extra_networks.extra_network_registry["lora"]
             network = lora_ctl_network.LoraCtlNetwork()
             extra_networks.register_extra_network(network)
-            extra_networks.register_extra_network_alias("loractl", network)
+            extra_networks.register_extra_network_alias(network, "loractl")
         elif not opt_enable and type(extra_networks.extra_network_registry["lora"]) != lora_ctl_network.LoraCtlNetwork.__bases__[0]:
             extra_networks.register_extra_network(self.original_network)
             self.original_network = None
