@@ -5,7 +5,7 @@ import re
 
 
 def sorted_positions(raw_steps):
-    steps = [[float(s.strip()) for s in x.split("@")]
+    steps = [[float(s.strip()) for s in re.split("[@~]", x)]
              for x in re.split("[,;]", str(raw_steps))]
     # If we just got a single number, just return it
     if len(steps[0]) == 1:
