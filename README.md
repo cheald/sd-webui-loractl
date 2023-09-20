@@ -63,7 +63,7 @@ You can use the named arguments `hr`, `hrte`, and `hrunet` to specify weights fo
 
 Or, you could grow the lora strength during the first pass, and then decline during the HR pass:
 
-    <lora:network:0@0,1@1;hr=1@0,0@1>
+    <lora:network:0@0,1@1:hr=1@0,0@1>
 
 ### Lora mixing
 
